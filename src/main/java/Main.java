@@ -17,11 +17,15 @@ public class Main {
         students[7] = new Student("Pascal", 2022008);
         students[8] = new Student("Munir", 2022009);
         StudentDB studentDB = new StudentDB(students);
-        System.out.println(studentDB.toString());
-        Student[] newAllStudents = studentDB.addStudent(new Student("Joon", 2022010));
-        System.out.println(Arrays.toString(newAllStudents));
-        Student[] reducedAllStudents = studentDB.removeStudent(newAllStudents[0]);
-        System.out.println(studentDB.toString());
+        System.out.println(studentDB);
+        studentDB.addStudent(new Student("Joon", 2022010));
+        System.out.println(studentDB);
+        Student [] allStudents = studentDB.getAllStudents();
+        studentDB.removeStudent(allStudents[0]);
+        System.out.println(studentDB);
+        Student randomStudent = studentDB.randomStudent();
+        System.out.println(randomStudent);
+
 
     }
 }

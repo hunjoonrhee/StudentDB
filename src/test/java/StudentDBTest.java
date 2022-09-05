@@ -52,7 +52,7 @@ public class StudentDBTest {
         students[1] = new Student("Marry", 2022002);
         StudentDB studentDB = new StudentDB(students);
         Student[] allStudents = studentDB.getAllStudents();
-        Student[] NewAllStudents = studentDB.addStudent(new Student("John", 2022003));
+        studentDB.addStudent(new Student("John", 2022003));
         Student[] allStudents2 = studentDB.getAllStudents();
 
 
@@ -73,7 +73,7 @@ public class StudentDBTest {
         students[2] = new Student("John", 2022003);
         StudentDB studentDB = new StudentDB(students);
         Student[] allStudents = studentDB.getAllStudents();
-        Student[] NewAllStudents = studentDB.removeStudent(students[2]);
+        studentDB.removeStudent(students[2]);
         Student[] allStudents2 = studentDB.getAllStudents();
 
 

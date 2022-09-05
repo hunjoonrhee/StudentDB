@@ -8,16 +8,24 @@ import java.util.Arrays;
 
 public class StudentDB {
     private Student[] students;
+    private Student[] presentStudents;
     private Student[] allStudents;
+    private boolean isadded=false;
+    private boolean isremoved=false;
 
     public StudentDB(Student[] students){
         this.students = students;
+        this.presentStudents = students; // das wird je nach Änderung (Add, Remove) aktualisiert.
     }
 
 
     public Student[] getAllStudents() {
-        allStudents = students;
-        return allStudents;
+        if(isadded || isremoved){
+            return allStudents = presentStudents;
+        }else{
+            allStudents = students;
+            return allStudents;
+        }
     }
 
     public Student randomStudent(){
@@ -25,14 +33,18 @@ public class StudentDB {
         return students[rand];
     }
 
-    public Student[] addStudent(Student student){
-        allStudents = getAllStudents();
-        Student[] newAllStudents = new Student[allStudents.length+1];
-        System.arraycopy(allStudents, 0, newAllStudents, 0, allStudents.length);
-        allStudents = newAllStudents;
-        allStudents[allStudents.length-1] = student;
-        return allStudents;
+    public Student[] getPresentStudents(){
+        return this.presentStudents;
+    }
 
+    public void addStudent(Student student){
+        presentStudents = getPresentStudents();
+        isadded = true;
+
+        Student[] newAllStudents = new Student[presentStudents.length+1];
+        System.arraycopy(presentStudents, 0, newAllStudents, 0, presentStudents.length);
+        newAllStudents[newAllStudents.length-1] = student;
+        presentStudents=newAllStudents;
     }
 
     @Override
@@ -53,32 +65,33 @@ public class StudentDB {
 
     @Override
     public String toString() {
-        Student[] allStudents = getAllStudents();
+        allStudents = getAllStudents();
         return Arrays.toString(allStudents);
     }
 
-    public Student[] removeStudent(Student student) {
-        Student[] allStudents = getAllStudents();
+    public void removeStudent(Student student) {
+        presentStudents = getPresentStudents();
+        isremoved=true;
         int index = 0;
-        for (int i = 0; i<allStudents.length;i++){
-            if(allStudents[i].equals(student)){
+        for (int i = 0; i<presentStudents.length;i++){
+            if(presentStudents[i].equals(student)){
                 index = i;
                 break;
             }
         }
-        Student[] reducedStudents = new Student[allStudents.length-1];
+        Student[] reducedStudents = new Student[presentStudents.length-1];
         if(index==0){
-            for (int i = 1; i<allStudents.length;i++){
-                reducedStudents[i-1] = allStudents[i];
+            for (int i = 1; i<presentStudents.length;i++){
+                reducedStudents[i-1] = presentStudents[i];
             }
         }else{
             for (int i=0; i<index;i++){
-                reducedStudents[i] = allStudents[i];
+                reducedStudents[i] = presentStudents[i];
             }
-            for(int i= index+1; i<allStudents.length;i++){
-                reducedStudents[i-1] = allStudents[i];
+            for(int i= index+1; i<presentStudents.length;i++){
+                reducedStudents[i-1] = presentStudents[i];
             }
         }
-        return reducedStudents;
+        presentStudents = reducedStudents;
     }
 }
