@@ -15,7 +15,6 @@ public class StudentDB {
 
     public StudentDB(Student[] students){
         this.students = students;
-        this.presentStudents = students; // das wird je nach Änderung (Add, Remove) aktualisiert.
     }
 
 
@@ -34,7 +33,7 @@ public class StudentDB {
     }
 
     public Student[] getPresentStudents(){
-        return this.presentStudents;
+        return this.presentStudents = students; // das wird je nach Änderung (Add, Remove) aktualisiert.;
     }
 
     public void addStudent(Student student){
